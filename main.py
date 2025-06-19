@@ -6,6 +6,7 @@ import pywinstyles
 root = ctk.CTk()
 root.title("DTR Face Recognition")
 root.attributes("-fullscreen", True)
+#root.state("zoomed")
 
 # Get dimensions after initialization
 root.update()
@@ -15,7 +16,7 @@ window_height = root.winfo_height()
 # Configure grid layout of root
 root.grid_columnconfigure(0, weight=3)
 root.grid_columnconfigure(1, weight=2)
-root.grid_columnconfigure(2, weight=0)   # fixed‑size controls
+root.grid_columnconfigure(2, weight=0)
 root.grid_rowconfigure(0, weight=0)
 root.grid_rowconfigure(1, weight=3)
 root.grid_rowconfigure(2, weight=0)
@@ -27,19 +28,19 @@ bg_label.place(relx=0, rely=0, relwidth=1, relheight=1)
 
 #Empty space for layout
 empty_space = ctk.CTkLabel(root, text="", height=int(window_height*0.08))
-empty_space.grid(row=0)
+empty_space.grid(row=0, column=0, columnspan=3, sticky="nsew")
 pywinstyles.set_opacity(empty_space, 0.0)
 
 # LIVE FEED Frame (left side)
-live_feed_frame = ctk.CTkFrame(root, fg_color="#002B28")
+live_feed_frame = ctk.CTkFrame(root)
 live_feed_frame.grid(row=1, column=0, padx=(15,0), pady=5, sticky="nsew")
-live_label = ctk.CTkLabel(live_feed_frame, text="LIVE FEED", font=("Arial", 22, "bold"))
+live_label = ctk.CTkLabel(live_feed_frame, text="LIVE FEED", font=("Arial", 22, "bold"), text_color="black")
 live_label.place(relx=0.5, rely=0.5, anchor="center")
 
 # TABLE Frame (right side)
-table_frame = ctk.CTkFrame(root, fg_color="#00384D")
+table_frame = ctk.CTkFrame(root)
 table_frame.grid(row=1, column=1, padx=(10,15), pady=5, sticky="nsew")
-table_label = ctk.CTkLabel(table_frame, text="TABLE", font=("Arial", 22, "bold"))
+table_label = ctk.CTkLabel(table_frame, text="TABLE", font=("Arial", 22, "bold"), text_color="black")
 table_label.place(relx=0.5, rely=0.5, anchor="center")
 
 # CONTROL BUTTONS: place them *inside* the table_frame, anchored NE
@@ -57,11 +58,28 @@ info_frame = ctk.CTkFrame(root, fg_color="#002B28")
 info_frame.grid(row=2, column=0, columnspan=2, padx=15, pady=(5, 15), sticky="nsew")
 info_frame.grid_columnconfigure(0, weight=0)
 info_frame.grid_columnconfigure(1, weight=40)
+info_frame.grid_rowconfigure(0, weight=1)
+info_frame.grid_rowconfigure(1, weight=1)
+info_frame.grid_rowconfigure(2, weight=1)
+info_frame.grid_rowconfigure(3, weight=1)
 
 photo_placeholder = ctk.CTkLabel(info_frame, text="", width=300, height=300, fg_color="white", corner_radius=5)
-photo_placeholder.grid(row=0, column=0, padx=10, pady=10, sticky = "w")
+photo_placeholder.grid(row=0, column=0, padx=10, pady=10, sticky = "w", rowspan=4)
 
-info_label = ctk.CTkLabel(info_frame, text="TIME IN:\nNAME:\nEMP#:\nDEPT:", text_color="white", font=("Arial", 62, "bold"), anchor="nw", justify="left")
-info_label.grid(row=0, column=1, sticky="w", padx=10, pady=10)
+# TIME IN (largest)
+time_in_label = ctk.CTkLabel(info_frame, text="TIME IN:", text_color="white", font=("Arial", 72, "bold"), anchor="w")
+time_in_label.grid(row=0, column=1, sticky="w", padx=10, pady=(10, 0))
+
+small_font = ("Arial", 38, "bold")
+
+name_label = ctk.CTkLabel( info_frame, text="NAME:", text_color="white", font=small_font, anchor="w")
+name_label.grid(row=1, column=1, sticky="w", padx=10, pady=0)
+
+emp_label = ctk.CTkLabel( info_frame, text="EMP#:", text_color="white", font=small_font, anchor="w")
+emp_label.grid(row=2, column=1, sticky="w", padx=10, pady=0)
+
+dept_label = ctk.CTkLabel(info_frame, text="DEPT:", text_color="white", font=small_font, anchor="w")
+dept_label.grid(row=3, column=1, sticky="w", padx=10, pady=(0, 10))
+
 
 root.mainloop()
