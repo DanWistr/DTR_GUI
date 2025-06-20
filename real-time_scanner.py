@@ -13,7 +13,8 @@ BarcodeReader.init_license(LICENSE_KEY)
 
 reader = BarcodeReader()
 settings = reader.get_runtime_settings()
-settings.expected_barcodes_count = 1
+settings.expected_barcodes_count = 2
+
 settings.grayscale_transformation_modes = [
     EnumGrayscaleTransformationMode.GTM_INVERTED,
     EnumGrayscaleTransformationMode.GTM_ORIGINAL,
@@ -24,6 +25,7 @@ settings.grayscale_transformation_modes = [
     EnumGrayscaleTransformationMode.GTM_SKIP,
     EnumGrayscaleTransformationMode.GTM_SKIP
 ]
+
 reader.update_runtime_settings(settings)
 
 cap = cv2.VideoCapture(0)
@@ -55,7 +57,6 @@ def is_duplicate(barcode_text, barcode_format):
     detected_barcodes.add(barcode_key)
     return False
 
-
 def add_barcode_to_xml(result):
     if is_duplicate(result.barcode_text, result.barcode_format_string):
         print(f"Duplicate barcode ignored: {result.barcode_text}")
@@ -70,13 +71,11 @@ def add_barcode_to_xml(result):
 
 def process_frame(frame):
     try:
-        # The DBR engine will now handle both regular and inverted barcodes
         results = reader.decode_buffer(frame)
         return results
     except BarcodeReaderError as bre:
         print(bre)
         return None
-
 
 while True:
     ret, frame = cap.read()
@@ -103,7 +102,7 @@ while True:
         task = pool.apply_async(process_frame, (frame.copy(),))
         barcodeTasks.append(task)
 
-    cv2.imshow('Mixed Barcode Scanner - Dynamsoft', frame)
+    cv2.imshow("Press 'Esc' to exit", frame)
 
     # Exit on 'ESC' key press (ASCII code 27)
     if cv2.waitKey(1) == 27:

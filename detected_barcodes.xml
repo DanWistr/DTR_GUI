@@ -1,2 +1,2 @@
 <?xml version='1.0' encoding='utf-8'?>
-<Barcodes><Barcode><Text>N49188-601</Text><Format>CODE_39_EXTENDED</Format></Barcode><Barcode><Text>VTDC00;D2146;L0000</Text><Format>DATAMATRIX</Format></Barcode><Barcode><Text>CN0G60M3WSC0027J1M5HA00</Text><Format>DATAMATRIX</Format></Barcode></Barcodes>
+<Barcodes><Barcode><Text>VTDC00;D2146;L0000</Text><Format>DATAMATRIX</Format></Barcode><Barcode><Text>N49188-601</Text><Format>CODE_39_EXTENDED</Format></Barcode></Barcodes>
